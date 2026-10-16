@@ -1,11 +1,16 @@
 const feedbackList = document.querySelector('#feedback-list');
 const feedbackCount = document.querySelector('#feedback-count');
+const feedbackApiUrl = window.location.port === '5500'
+  ? `http://${window.location.hostname}:5000/api/feedback`
+  : `${window.location.origin}/api/feedback`;
 
 async function parseJsonResponse(response) {
   const text = await response.text();
 
   if (!text) {
-    throw new Error('The server returned an empty response.');
+    throw new Error(
+      `The server returned an empty response (HTTP ${response.status}). Make sure the Express backend is running and this page is opened from the same origin.`
+    );
   }
 
   try {
@@ -28,14 +33,15 @@ function renderFeedback(feedback) {
 
   feedbackList.innerHTML = feedback.map((item) => `
     <article class="feedback-card">
-      <div class="feedback-card-top"><div class="avatar">${escapeHtml(item.name.trim().charAt(0).toUpperCase())}</div><div><h3>${escapeHtml(item.name)}</h3><time datetime="${item.createdAt}">${new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(item.createdAt))}</time></div><span class="stars" aria-label="${item.rating} out of 5 stars">${'★'.repeat(item.rating)}${'☆'.repeat(5 - item.rating)}</span></div>
+      <div class="feedback-card-top"><div class="avatar">${escapeHtml(item.name.trim().charAt(0).toUpperCase())}</div><div><h3>${escapeHtml(item.name)}</h3>
+      <time datetime="${item.createdAt}">${new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(item.createdAt))}</time></div><span class="stars" aria-label="${item.rating} out of 5 stars">${'★'.repeat(item.rating)}${'☆'.repeat(5 - item.rating)}</span></div>
       <p>${escapeHtml(item.comments)}</p>
     </article>`).join('');
 }
 
 async function loadFeedback() {
   try {
-    const response = await fetch('/api/feedback');
+    const response = await fetch(feedbackApiUrl);
     const data = await parseJsonResponse(response);
     if (!response.ok) throw new Error(data.message || 'Could not load reflections.');
     renderFeedback(data);

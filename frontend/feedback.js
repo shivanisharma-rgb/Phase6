@@ -3,12 +3,18 @@ const commentsInput = document.querySelector('#comments');
 const characterCount = document.querySelector('#character-count');
 const formMessage = document.querySelector('#form-message');
 const submitButton = document.querySelector('#submit-button');
+const feedbackApiUrl = window.location.port === '5500'
+  ? `http://${window.location.hostname}:5000/api/feedback`
+  : `${window.location.origin}/api/feedback`;
 
 async function parseJsonResponse(response) {
   const text = await response.text();
 
   if (!text) {
-    throw new Error('The server returned an empty response.');
+    throw new Error(
+      `The server returned an empty response (HTTP ${response.status}).
+       Make sure the Express backend is running and this page is opened from the same origin.`
+    );
   }
 
   try {
@@ -19,7 +25,7 @@ async function parseJsonResponse(response) {
 }
 
 commentsInput.addEventListener('input', () => {
-  characterCount.textContent = `${commentsInput.value.length} / 500`;
+  characterCount.textContent = `${commentsInput.value.length} / 5000`;
 });
 
 form.addEventListener('submit', async (event) => {
@@ -29,11 +35,11 @@ form.addEventListener('submit', async (event) => {
   submitButton.textContent = 'Saving...';
 
   try {
-    const response = await fetch('/api/feedback', {
+    const response = await fetch(feedbackApiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: form.name.value,
+        name: form.querySelector('[name="name"]').value,
         rating: form.rating.value,
         comments: form.comments.value
       })
@@ -42,7 +48,7 @@ form.addEventListener('submit', async (event) => {
     if (!response.ok) throw new Error(result.message || 'Could not save feedback.');
 
     form.reset();
-    characterCount.textContent = '0 / 500';
+    characterCount.textContent = '0 / 5000';
     formMessage.textContent = 'Thanks, your feedback was saved.';
     formMessage.className = 'form-message success';
   } catch (error) {

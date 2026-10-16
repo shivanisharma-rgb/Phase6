@@ -1,34 +1,161 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Submit student feedback." />
-    <title>Share Feedback | Student Feedback Manager</title>
-    <link rel="stylesheet" href="feedback.css" />
-  </head>
-  <body>
-    <header class="site-header">
-      <a class="brand" href="/">Student Feedback</a>
-      <nav><a class="active" href="/">Share feedback</a><a href="/all-feedback">All feedback</a></nav>
-    </header>
-    <main class="page-shell">
-      <section class="hero"><p class="eyebrow">Student Feedback Manager</p><h1>Your voice makes the next lesson better.</h1><p>Share a quick reflection with your learning community. Every response is saved and helps us understand what is working.</p><p class="demo-note">Demo mode is active until MongoDB is connected.</p></section>
-      <section class="form-panel" aria-labelledby="form-title">
-        <p class="eyebrow">01 / Reflect</p><h2 id="form-title">Leave feedback</h2>
-        <form id="feedback-form">
-          <label for="name">Your name</label>
-          <input id="name" name="name" type="text" placeholder="e.g. Aisha Khan" minlength="2" maxlength="60" required />
-          <fieldset><legend>How was your experience?</legend><div class="rating-group" role="radiogroup" aria-label="Rating from one to five stars">
-            <label><input type="radio" name="rating" value="1" required /><span>1</span></label><label><input type="radio" name="rating" value="2" /><span>2</span></label><label><input type="radio" name="rating" value="3" /><span>3</span></label><label><input type="radio" name="rating" value="4" /><span>4</span></label><label><input type="radio" name="rating" value="5" /><span>5</span></label>
-          </div><div class="rating-labels"><span>Needs work</span><span>Excellent</span></div></fieldset>
-          <label for="comments">Your thoughts</label><textarea id="comments" name="comments" rows="5" maxlength="500" minlength="5" placeholder="What stood out to you? What could be even better?" required></textarea>
-          <div class="form-footer"><span id="character-count">0 / 500</span><button type="submit" id="submit-button">Send feedback <span aria-hidden="true">↗</span></button></div>
-          <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
-        </form>
-      </section>
-    </main>
-    <footer><span>Built for better learning</span><a href="/all-feedback">Read community notes →</a></footer>
-    <script src="/feedback.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Submit student feedback." />
+
+  <title>Share Feedback | Student Feedback Manager</title>
+
+  <link rel="stylesheet" href="feedback.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">Student Feedback</a>
+
+    <nav>
+      <a class="active" href="/">Share feedback</a>
+      <a href="/frontend/all-feedback.html">All feedback</a>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero">
+      <p class="eyebrow">Student Feedback Manager</p>
+
+      <h1>Your voice makes the next lesson better.</h1>
+
+      <p>
+        Share a quick reflection with your learning community.
+        Every response is saved and helps us understand what is
+        working.
+      </p>
+
+      <p class="demo-note">
+        Demo mode is active until MongoDB is connected.
+      </p>
+    </section>
+
+    <section class="form-panel" aria-labelledby="form-title">
+      <p class="eyebrow">01 / Reflect</p>
+
+      <h2 id="form-title">Leave feedback</h2>
+
+      <form id="feedback-form">
+        <label for="name">Your name</label>
+
+        <input
+          id="name"
+          name="name"
+          type="text"
+          autocomplete="name"
+          placeholder="e.g. Aisha Khan"
+          minlength="2"
+          maxlength="60"
+          required
+        />
+
+        <fieldset>
+          <legend>How was your experience?</legend>
+
+          <div
+            class="rating-group"
+            role="radiogroup"
+            aria-label="Rating from one to five stars"
+          >
+            <label>
+              <input
+                type="radio"
+                name="rating"
+                value="1"
+                required
+              />
+              <span>1</span>
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="rating"
+                value="2"
+              />
+              <span>2</span>
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="rating"
+                value="3"
+              />
+              <span>3</span>
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="rating"
+                value="4"
+              />
+              <span>4</span>
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="rating"
+                value="5"
+              />
+              <span>5</span>
+            </label>
+          </div>
+
+          <div class="rating-labels">
+            <span>Needs work</span>
+            <span>Excellent</span>
+          </div>
+        </fieldset>
+
+        <label for="comments">Your thoughts</label>
+
+        <textarea
+          id="comments"
+          name="comments"
+          rows="5"
+          maxlength="500"
+          minlength="5"
+          placeholder="What stood out to you? What could be even better?"
+          required
+        ></textarea>
+
+        <div class="form-footer">
+          <span id="character-count">0 / 500</span>
+
+          <button type="submit" id="submit-button">
+            Send feedback
+            <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+
+        <p
+          id="form-message"
+          class="form-message"
+          role="status"
+          aria-live="polite"
+        ></p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <span>Built for better learning</span>
+
+    <a href="/all-feedback">Read community notes →</a>
+  </footer>
+
+  <script src="feedback.js"></script>
+</body>
+
 </html>
